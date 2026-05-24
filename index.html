@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中华民族共同体数字化宣传平台</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif;}
+body{background:#f8f9fa;color:#333;line-height:1.85;}
+a{text-decoration:none;color:inherit;}
+ul{list-style:none;}
+
+header{background:#c92a2a;position:sticky;top:0;z-index:999;box-shadow:0 2px 10px rgba(0,0,0,0.1);}
+.nav{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 20px;height:75px;color:#fff;}
+.logo{font-size:24px;font-weight:bold;}
+.nav-list{display:flex;gap:20px;flex-wrap:wrap;}
+.nav-list a{font-size:15px;padding:8px 12px;border-radius:5px;transition:0.2s;white-space:nowrap;}
+.nav-list a:hover{background:rgba(255,255,255,0.18);}
+
+.banner{width:100%;height:500px;background:#c92a2a;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;position:relative;overflow:hidden;}
+.banner img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.35;}
+.banner .text{position:relative;z-index:2;max-width:900px;padding:20px;}
+.banner h1{font-size:46px;margin-bottom:20px;}
+.banner p{font-size:20px;opacity:0.95;}
+
+.container{max-width:1400px;margin:0 auto;padding:60px 20px;}
+.section-title{text-align:center;font-size:32px;margin-bottom:50px;color:#c92a2a;position:relative;}
+.section-title::after{content:"";width:100px;height:4px;background:#c92a2a;position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);}
+
+.card-box{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:25px;margin-bottom:60px;}
+.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 15px rgba(0,0,0,0.06);transition:0.3s;padding:25px;}
+.card:hover{transform:translateY(-6px);}
+.card h3{font-size:19px;margin-bottom:15px;color:#c92a2a;text-align:center;}
+.card p{font-size:14px;color:#666;line-height:1.7;text-align:justify;}
+
+.box{background:#fff;padding:40px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.05);margin-bottom:45px;}
+.box h2{font-size:24px;color:#c92a2a;margin-bottom:20px;}
+.box p{font-size:16px;margin-bottom:15px;text-indent:2em;line-height:1.9;}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:25px;margin-bottom:50px;}
+.grid .item{background:#fff;padding:30px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.grid .item h3{color:#c92a2a;margin-bottom:12px;font-size:20px;}
+.grid .item p{font-size:15px;color:#555;}
+
+.news-list{margin-bottom:50px;}
+.news-list li{padding:16px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;cursor:pointer;background:#fff;border-radius:8px;margin-bottom:8px;}
+.news-list li:hover{color:#c92a2a;background:#fff7f7;}
+.news-list li span{color:#999;font-size:14px;}
+
+.news-detail{display:none;background:#fff;padding:40px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+.news-detail h2{font-size:26px;color:#c92a2a;margin-bottom:10px;}
+.news-detail .date{color:#999;margin-bottom:20px;}
+.news-detail p{font-size:16px;margin-bottom:16px;text-indent:2em;line-height:1.9;}
+.back-btn{background:#c92a2a;color:#fff;border:none;padding:12px 26px;border-radius:6px;cursor:pointer;margin-top:20px;font-size:15px;}
+.back-btn:hover{background:#a82020;}
+
+.quiz-box{background:#fff;padding:40px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+.quiz-question{margin-bottom:24px;}
+.quiz-question h3{font-size:18px;color:#c92a2a;margin-bottom:12px;}
+.quiz-options{display:flex;flex-direction:column;gap:10px;margin-left:10px;}
+.quiz-options label{cursor:pointer;padding:6px 0;}
+.quiz-submit{background:#c92a2a;color:#fff;border:none;padding:12px 30px;border-radius:6px;font-size:16px;cursor:pointer;margin-top:20px;}
+.quiz-result{margin-top:30px;padding:20px;border-radius:8px;background:#f8f9fa;display:none;}
+.quiz-result h3{color:#c92a2a;margin-bottom:10px;}
+.quiz-result p{font-size:16px;}
+.quiz-restart{background:#6c757d;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;margin-top:15px;}
+
+footer{background:#212121;color:#ccc;padding:50px 20px;text-align:center;font-size:14px;}
+
+@media(max-width:768px){
+    .grid{grid-template-columns:1fr;}
+    .banner h1{font-size:32px;}
+    .nav-list{gap:10px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="nav">
+<div class="logo">中华民族共同体</div>
+<ul class="nav-list">
+<li><a href="#home">首页</a></li>
+<li><a href="#idea">理念内涵</a></li>
+<li><a href="#news">新闻动态</a></li>
+<li><a href="#nation">民族百科</a></li>
+<li><a href="#history">民族历史</a></li>
+<li><a href="#policy">民族政策</a></li>
+<li><a href="#culture">文化传承</a></li>
+<li><a href="#study">学习教育</a></li>
+<li><a href="#exam">知识答题</a></li>
+</ul>
+</div>
+</header>
+
+<section class="banner" id="home">
+<img src="https://images.unsplash.com/photo-1599423173227-de5f9e9221dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="民族团结">
+<div class="text">
+<h1>铸牢中华民族共同体意识</h1>
+<p>五十六个民族像石榴籽一样紧紧抱在一起，共同团结奋斗、共同繁荣发展，同心共筑中华民族伟大复兴的中国梦。</p>
+</div>
+</section>
+
+<div class="container">
+
+<section id="idea">
+<h2 class="section-title">理念内涵</h2>
+<div class="box">
+<h2>中华民族共同体核心要义</h2>
+<p>中华民族共同体是我国各族人民在长期历史进程中形成的命运共同体、利益共同体、文化共同体、精神共同体，是国家统一之基、民族团结之本、精神力量之魂。它深刻揭示了中国各民族“你中有我、我中有你、谁也离不开谁”的紧密联系。</p>
+<p>铸牢中华民族共同体意识，就是要引导各族人民牢固树立休戚与共、荣辱与共、生死与共、命运与共的共同体理念，不断增强对伟大祖国、中华民族、中华文化、中国共产党、中国特色社会主义的高度认同。</p>
+<p>我国各民族共同开拓了辽阔疆域、共同书写了悠久历史、共同创造了灿烂文化、共同培育了伟大精神。多元一体，是中华民族的显著特征和突出优势；团结统一，则是中华民族生生不息的力量源泉。</p>
+<p>新时代党的民族工作以铸牢中华民族共同体意识为主线，推动各民族广泛交往、全面交流、深度交融，促进各民族像石榴籽一样紧紧抱在一起，共同团结奋斗、共同繁荣发展。</p>
+</div>
+<div class="grid">
+<div class="item">
+<h3>五个认同</h3>
+<p>对伟大祖国、中华民族、中华文化、中国共产党、中国特色社会主义的高度认同，是民族团结的思想根基与精神纽带，是国家统一、民族团结的政治基础。</p>
+</div>
+<div class="item">
+<h3>四个共同</h3>
+<p>共同开拓疆域、共同书写历史、共同创造文化、共同培育精神，深刻阐明了中华民族形成发展的历史逻辑，是理解中华民族共同体的关键视角。</p>
+</div>
+<div class="item">
+<h3>石榴籽精神</h3>
+<p>各民族相互依存、相互包容、守望相助、手足情深，在交流交融中凝聚起同心共筑中国梦的磅礴力量，象征着各民族紧密团结、不可分割。</p>
+</div>
+<div class="item">
+<h3>多元一体格局</h3>
+<p>各民族各具特色又紧密相连，在统一多民族国家中交融互鉴、和谐共生，共同构成了一个包容奋进、多元一体的中华民族大家庭。</p>
+</div>
+</div>
+</section>
+
+<section id="news">
+<h2 class="section-title">新闻动态</h2>
+<ul class="news-list" id="newsList">
+<li data-id="1"><a>中央民族工作会议精神学习解读</a><span>2025-01-10</span></li>
+<li data-id="2"><a>全国民族团结进步示范单位创建工作启动</a><span>2025-01-15</span></li>
+<li data-id="3"><a>各民族文化交流展示活动成功举办</a><span>2025-02-03</span></li>
+<li data-id="4"><a>铸牢中华民族共同体意识主题教育全面开展</a><span>2025-02-20</span></li>
+<li data-id="5"><a>少数民族非物质文化遗产保护成果发布</a><span>2025-03-01</span></li>
+</ul>
+<div class="news-detail" id="newsDetail">
+<h2 id="detailTitle"></h2>
+<div class="date" id="detailDate"></div>
+<div id="detailContent"></div>
+<button class="back-btn" onclick="showNewsList()">返回新闻列表</button>
+</div>
+</section>
+
+<section id="nation">
+<h2 class="section-title">民族百科</h2>
+<div class="card-box">
+<div class="card">
+<h3>五十六个民族</h3>
+<p>我国由56个民族组成，各民族历史悠久、风情各异，在长期交往交流交融中形成了“多元一体”的格局。从漠河到南沙，从东海到帕米尔，各民族共同构成了统一和谐的多民族大家庭。</p>
+</div>
+<div class="card">
+<h3>民族节日</h3>
+<p>那达慕大会、火把节、泼水节、藏历新年、三月三、开斋节等节庆，承载着深厚的民族记忆，展现了丰富多彩的民俗文化魅力，是各民族文化多样性的生动体现。</p>
+</div>
+<div class="card">
+<h3>民族服饰</h3>
+<p>各民族服饰纹样精美、风格鲜明，如蒙古族的蒙古袍、藏族的藏袍、苗族的银饰盛装等，是民族历史、信仰与生活方式的直观体现，也是中华文化宝库中绚丽多彩的组成部分。</p>
+</div>
+<div class="card">
+<h3>非遗技艺</h3>
+<p>侗族大歌、维吾尔木卡姆艺术、苗族银饰锻造、宣纸制作技艺等国家级非物质文化遗产，代代相传，延续着民族文脉，彰显了中华优秀传统文化的独特魅力。</p>
+</div>
+<div class="card">
+<h3>民族美食</h3>
+<p>酥油茶、手抓饭、烤全羊、糌粑、酸汤鱼、过桥米线等特色饮食，体现了各民族独特的生活习俗与地域智慧，是民族文化与生活美学的生动载体。</p>
+</div>
+<div class="card">
+<h3>民族艺术</h3>
+<p>民族音乐、舞蹈、史诗、绘画、戏曲等艺术形式丰富多彩，如《格萨尔王传》《玛纳斯》等史诗，承载着民族精神与情感，是中华文化宝库中璀璨夺目的瑰宝。</p>
+</div>
+</div>
+</section>
+
+<section id="history">
+<h2 class="section-title">民族历史</h2>
+<div class="box">
+<h2>中华民族交往交流交融史</h2>
+<p>中华民族的形成与发展史，就是一部各民族不断交往、交流、交融的历史。从秦汉时期的大一统格局，到隋唐时期的开放包容；从元朝的大一统，到清朝的巩固发展，各民族在漫长的历史进程中，深度互动，共同缔造了统一的多民族国家。</p>
+<p>历史上，丝绸之路的开辟，促进了中原与西域、北方草原、西南边疆等各民族的经济文化交流；茶马古道的绵延，维系了汉藏等民族间的紧密联系；北魏孝文帝改革、文成公主入藏等历史事件，更是民族融合的典范。</p>
+<p>无数历史人物与事件都见证了各民族休戚与共、命运相连的深厚情谊。深入了解这段历史，是铸牢中华民族共同体意识的历史根基。它清晰地表明，各民族共同开拓了祖国的辽阔疆域，共同书写了祖国的悠久历史，共同创造了灿烂的中华文化。</p>
+</div>
+</section>
+
+<section id="policy">
+<h2 class="section-title">民族政策</h2>
+<div class="box">
+<h2>新时代党的民族政策体系</h2>
+<p>中国共产党始终高度重视民族工作，坚持把马克思主义民族理论与中国具体实际相结合，形成了一套完整、科学、有效的民族政策体系。其核心是坚持民族平等、民族团结、各民族共同繁荣发展。</p>
+<p><strong>民族平等政策</strong>：保障各民族在政治、经济、文化、社会等各领域享有平等权利，禁止任何形式的民族歧视和压迫，是我国民族政策的基石。</p>
+<p><strong>民族团结政策</strong>：是处理民族关系的根本原则，倡导各民族互相信任、互相尊重、互相学习、互相帮助，共同维护国家统一和社会稳定。</p>
+<p><strong>民族区域自治政策</strong>：是我国的一项基本政治制度，在少数民族聚居地区实行区域自治，设立自治机关，行使自治权，保障少数民族当家作主的权利。</p>
+<p><strong>各民族共同繁荣发展政策</strong>：国家通过加大对民族地区的投入，实施西部大开发、兴边富民行动、对口支援等战略，推动民族地区经济社会快速发展，促进各民族共享改革发展成果，实现共同富裕。</p>
+<p>这些政策的贯彻实施，为铸牢中华民族共同体意识提供了坚实的制度保障，有力地推动了各民族共同团结奋斗、共同繁荣发展。</p>
+</div>
+</section>
+
+<section id="culture">
+<h2 class="section-title">文化传承</h2>
+<div class="box">
+<h2>构筑中华民族共有精神家园</h2>
+<p>中华文化是各民族文化的集大成，各民族优秀文化都是中华文化不可分割的重要组成部分，共同构成了中华民族共有的精神财富。</p>
+<p>在数千年历史长河中，各民族相互交流、相互借鉴、相互融合，共同铸就了灿烂辉煌、绵延不绝的中华文明，形成了兼容并蓄、博大精深的文化体系。</p>
+<p>传承中华优秀传统文化、革命文化和社会主义先进文化，是铸牢中华民族共同体意识的重要根基，也是增强文化自信、凝聚民族精神的关键举措。</p>
+<p>推动各民族文化传承创新与交融互鉴，不断增强中华文化的凝聚力、向心力与国际影响力，让各民族在文化认同基础上实现更深层次的团结奋进。</p>
+</div>
+</section>
+
+<section id="study">
+<h2 class="section-title">学习教育</h2>
+<div class="box">
+<h2>民族团结进步教育专栏</h2>
+<p>深入学习贯彻习近平总书记关于加强和改进民族工作的重要思想，全面理解新时代党的民族工作的历史方位、重要任务与实践要求。</p>
+<p>平台系统整合政策文件、理论文章、学习课件、微课视频、专题讲座、宣传素材等学习资源，为广大干部群众提供一站式学习服务。</p>
+<p>面向学校、机关、社区、企业开展常态化、数字化、全覆盖式民族团结进步宣传教育，推动中华民族共同体意识入脑入心。</p>
+<p>通过系统化学习、常态化宣传、实践化体验，不断增进各民族交往交流交融，凝聚起实现中华民族伟大复兴中国梦的强大合力。</p>
+</div>
+</section>
+
+<section id="exam">
+<h2 class="section-title">知识答题</h2>
+<div class="quiz-box">
+<form id="quizForm">
+<div class="quiz-question">
+<h3>1. 铸牢中华民族共同体意识是新时代党的民族工作的（）</h3>
+<div class="quiz-options">
+<label><input type="radio" name="q1" value="A"> A. 重要任务</label>
+<label><input type="radio" name="q1" value="B"> B. 鲜明主线</label>
+<label><input type="radio" name="q1" value="C"> C. 核心目标</label>
+<label><input type="radio" name="q1" value="D"> D. 基础工程</label>
+</div>
+</div>
+<div class="quiz-question">
+<h3>2. 我国各民族分布的特点是（）</h3>
+<div class="quiz-options">
+<label><input type="radio" name="q2" value="A"> A. 大杂居、小聚居、交错居住</label>
+<label><input type="radio" name="q2" value="B"> B. 小杂居、大聚居、集中居住</label>
+<label><input type="radio" name="q2" value="C"> C. 平原聚居、边疆散居</label>
+<label><input type="radio" name="q2" value="D"> D. 城市集中、乡村分散</label>
+</div>
+</div>
+<div class="quiz-question">
+<h3>3. 中华民族共同体意识首次写入党的全国代表大会报告是在（）</h3>
+<div class="quiz-options">
+<label><input type="radio" name="q3" value="A"> A. 党的十七大</label>
+<label><input type="radio" name="q3" value="B"> B. 党的十八大</label>
+<label><input type="radio" name="q3" value="C"> C. 党的十九大</label>
+<label><input type="radio" name="q3" value="D"> D. 党的二十大</label>
+</div>
+</div>
+<div class="quiz-question">
+<h3>4. 我国处理民族关系的根本原则是（）</h3>
+<div class="quiz-options">
+<label><input type="radio" name="q4" value="A"> A. 民族平等</label>
+<label><input type="radio" name="q4" value="B"> B. 民族团结</label>
+<label><input type="radio" name="q4" value="C"> C. 各民族共同繁荣</label>
+<label><input type="radio" name="q4" value="D"> D. 民族区域自治</label>
+</div>
+</div>
+<div class="quiz-question">
+<h3>5. 铸牢中华民族共同体意识，关键是要增进（）</h3>
+<div class="quiz-options">
+<label><input type="radio" name="q5" value="A"> A. 经济认同</label>
+<label><input type="radio" name="q5" value="B"> B. 政治认同</label>
+<label><input type="radio" name="q5" value="C"> C. 文化认同</label>
+<label><input type="radio" name="q5" value="D"> D. 社会认同</label>
+</div>
+</div>
+<div class="quiz-question">
+<h3>6. 我国的一项基本政治制度，保障少数民族当家作主的是（）</h3>
+<div class="quiz-options">
+<label><input type="radio" name="q6" value="A"> A. 人民代表大会制度</label>
+<label><input type="radio" name="q6" value="B"> B. 民族区域自治制度</label>
+<label><input type="radio" name="q6" value="C"> C. 基层群众自治制度</label>
+<label><input type="radio" name="q6" value="D"> D. 中国共产党领导的多党合作和政治协商制度</label>
+</div>
+</div>
+<div class="quiz-question">
+<h3>7. “五个认同”中不包括（）</h3>
+<div class="quiz-options">
+<label><input type="radio" name="q7" value="A"> A. 对伟大祖国的认同</label>
+<label><input type="radio" name="q7" value="B"> B. 对中华民族的认同</label>
+<label><input type="radio" name="q7" value="C"> C. 对西方文化的认同</label>
+<label><input type="radio" name="q7" value="D"> D. 对中国共产党的认同</label>
+</div>
+</div>
+<div class="quiz-question">
+<h3>8. 历史上“胡汉交融”的典型事件是（）</h3>
+<div class="quiz-options">
+<label><input type="radio" name="q8" value="A"> A. 商鞅变法</label>
+<label><input type="radio" name="q8" value="B"> B. 北魏孝文帝改革</label>
+<label><input type="radio" name="q8" value="C"> C. 王安石变法</label>
+<label><input type="radio" name="q8" value="D"> D. 戊戌变法</label>
+</div>
+</div>
+<div class="quiz-question">
+<h3>9. 中华民族的显著特征和突出优势是（）</h3>
+<div class="quiz-options">
+<label><input type="radio" name="q9" value="A"> A. 多元一体</label>
+<label><input type="radio" name="q9" value="B"> B. 单一民族</label>
+<label><input type="radio" name="q9" value="C"> C. 高度分散</label>
+<label><input type="radio" name="q9" value="D"> D. 各自为政</label>
+</div>
+</div>
+<div class="quiz-question">
+<h3>10. 各民族共同培育的伟大精神不包括（）</h3>
+<div class="quiz-options">
+<label><input type="radio" name="q10" value="A"> A. 爱国主义精神</label>
+<label><input type="radio" name="q10" value="B"> B. 团结统一精神</label>
+<label><input type="radio" name="q10" value="C"> C. 分裂对立精神</label>
+<label><input type="radio" name="q10" value="D"> D. 自强不息精神</label>
+</div>
+</div>
+<button type="button" class="quiz-submit" onclick="submitQuiz()">提交答卷</button>
+</form>
+<div class="quiz-result" id="quizResult">
+<h3>答题结果</h3>
+<p id="resultText"></p>
+<button class="quiz-restart" onclick="restartQuiz()">重新答题</button>
+</div>
+</div>
+</section>
+
+</div>
+
+<footer>
+<p>© 2026 中华民族共同体数字化宣传平台 | 版权所有</p>
+</footer>
+
+<script>
+const newsData = {
+    1: {
+        title: "中央民族工作会议精神学习解读",
+        date: "2025-01-10",
+        content: "中央民族工作会议明确了以铸牢中华民族共同体意识为主线推进新时代党的民族工作高质量发展的指导思想、战略目标、重点任务、政策举措，为做好新时代党的民族工作指明了前进方向、提供了根本遵循。会议强调，要完整准确全面把握和贯彻习近平总书记关于加强和改进民族工作的重要思想，深刻认识铸牢中华民族共同体意识的重大意义，推动各民族共同走向社会主义现代化。"
+    },
+    2: {
+        title: "全国民族团结进步示范单位创建工作启动",
+        date: "2025-01-15",
+        content: "为深入贯彻落实中央民族工作会议精神，全国民族团结进步示范单位创建工作全面启动。创建工作将围绕铸牢中华民族共同体意识主线，突出思想引领、文化浸润、实践养成，推动民族团结进步创建工作向纵深发展，引导各族群众牢固树立休戚与共、荣辱与共、生死与共、命运与共的共同体理念。"
+    },
+    3: {
+        title: "各民族文化交流展示活动成功举办",
+        date: "2025-02-03",
+        content: "近日，全国各民族文化交流展示活动在多地成功举办。活动通过文艺演出、非遗展示、民俗体验等形式，集中展现了各民族优秀文化魅力，促进了各民族文化交流互鉴。活动旨在构筑中华民族共有精神家园，不断增强各民族对中华文化的认同，推动各民族在文化交融中凝聚团结奋进力量。"
+    },
+    4: {
+        title: "铸牢中华民族共同体意识主题教育全面开展",
+        date: "2025-02-20",
+        content: "全国范围内铸牢中华民族共同体意识主题教育全面开展。主题教育聚焦学习贯彻习近平总书记关于加强和改进民族工作的重要思想，通过专题学习、研讨交流、实践活动等多种形式，推动中华民族共同体意识入脑入心，引导各族群众不断增强“五个认同”，凝聚起同心共筑中国梦的磅礴力量。"
+    },
+    5: {
+        title: "少数民族非物质文化遗产保护成果发布",
+        date: "2025-03-01",
+        content: "国家民委、文旅部联合发布少数民族非物质文化遗产保护成果。近年来，我国持续加大少数民族非遗保护力度，一大批民族非遗项目得到有效传承和发展。成果发布展示了各民族非遗保护的显著成效，强调要在保护中传承、在传承中创新，让少数民族非遗成为铸牢中华民族共同体意识的重要文化载体。"
+    }
+};
+
+const newsList = document.getElementById('newsList');
+const newsDetail = document.getElementById('newsDetail');
+const detailTitle = document.getElementById('detailTitle');
+const detailDate = document.getElementById('detailDate');
+const detailContent = document.getElementById('detailContent');
+
+newsList.addEventListener('click', (e) => {
+    const li = e.target.closest('li');
+    if (!li) return;
+    const id = li.dataset.id;
+    const data = newsData[id];
+    detailTitle.textContent = data.title;
+    detailDate.textContent = data.date;
+    detailContent.innerHTML = `<p>${data.content}</p>`;
+    newsList.style.display = 'none';
+    newsDetail.style.display = 'block';
+});
+
+function showNewsList() {
+    newsList.style.display = 'block';
+    newsDetail.style.display = 'none';
+}
+
+const correctAnswers = {
+    q1: "B", q2: "A", q3: "C", q4: "B", q5: "C",
+    q6: "B", q7: "C", q8: "B", q9: "A", q10: "C"
+};
+
+function submitQuiz() {
+    let score = 0;
+    const form = document.getElementById('quizForm');
+    const formData = new FormData(form);
+    for (let [name, value] of formData) {
+        if (correctAnswers[name] === value) score++;
+    }
+    const resultText = document.getElementById('resultText');
+    const resultDiv = document.getElementById('quizResult');
+    resultText.textContent = `您答对了 ${score} 题，得分：${score*10} 分。`;
+    if (score >= 8) {
+        resultText.innerHTML += `<br><strong>优秀！您对中华民族共同体知识掌握扎实。</strong>`;
+    } else if (score >= 5) {
+        resultText.innerHTML += `<br><strong>良好！继续加强学习。</strong>`;
+    } else {
+        resultText.innerHTML += `<br><strong>需加强学习，建议重温平台内容。</strong>`;
+    }
+    resultDiv.style.display = 'block';
+}
+
+function restartQuiz() {
+    document.getElementById('quizForm').reset();
+    document.getElementById('quizResult').style.display = 'none';
+}
+</script>
+</body>
+</html>

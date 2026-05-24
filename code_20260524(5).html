@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中华民族共同体数字化学习平台</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:"宋体","微软雅黑",serif;}
+        body{
+            background: #f9f3e8;
+            color: #3a2b1f;
+            line-height: 1.8;
+            background-image: url("https://picsum.photos/id/137/1200/800");
+            background-attachment: fixed;
+            background-size: cover;
+            background-blend-mode: overlay;
+        }
+        /* 唐三彩主色调：墨绿、赭黄、米白、棕褐 */
+        :root{
+            --san-green: #1e7c3b;
+            --san-yellow: #d48a3c;
+            --san-cream: #f8f3e8;
+            --san-brown: #8c5c38;
+        }
+        /* 顶部头部 */
+        .header-box{
+            background-color: #9e1010;
+            text-align:center;
+            padding:50px 20px;
+            color:var(--san-cream);
+            text-shadow:2px 2px 4px #000;
+            border-bottom: 4px solid var(--san-yellow);
+            position: relative;
+        }
+        .header-box::after{
+            content:"";
+            position:absolute;
+            left:0;right:0;bottom:0;
+            height:8px;
+            background:repeating-linear-gradient(45deg,var(--san-yellow) 0 4px,transparent 4px 8px);
+            opacity:0.6;
+        }
+        .header-box h1{font-size:32px;margin-bottom:6px;}
+        .header-box p{font-size:17px;opacity:0.9;}
+
+        /* 首页模块导航 */
+        .nav-module{
+            width:93%;
+            max-width:1280px;
+            margin:45px auto;
+            display:grid;
+            grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+            gap:22px;
+        }
+        .nav-card{
+            background:rgba(255,255,255,0.93);
+            border:3px solid var(--san-yellow);
+            border-radius:15px;
+            padding:28px 18px;
+            text-align:center;
+            cursor:pointer;
+            transition:0.3s ease;
+            box-shadow:0 3px 10px rgba(30,124,59,0.2);
+        }
+        .nav-card:hover{
+            transform:translateY(-6px);
+            border-color:var(--san-green);
+            box-shadow:0 6px 18px rgba(140,92,56,0.35);
+        }
+        .nav-card h3{color:var(--san-brown);font-size:19px;margin-bottom:10px;}
+        .nav-card span{font-size:14px;color:#666;}
+
+        /* 内容页面通用样式 */
+        .content-wrap{
+            width:93%;
+            max-width:1280px;
+            margin:35px auto;
+            background:rgba(255,255,255,0.95);
+            border-radius:12px;
+            padding:32px;
+            border-left:7px solid var(--san-green);
+            display:none;
+        }
+        .back-btn{
+            display:inline-block;
+            padding:7px 18px;
+            background:var(--san-green);
+            color:#fff;
+            border-radius:5px;
+            cursor:pointer;
+            margin-bottom:20px;
+        }
+        .content-wrap h2{
+            color:var(--san-brown);
+            padding-bottom:8px;
+            border-bottom:2px dashed var(--san-yellow);
+            margin-bottom:22px;
+        }
+        .title-four{
+            color:var(--san-green);
+            font-weight:bold;
+            font-size:17px;
+            margin:18px 0 8px;
+        }
+        .text-content{text-indent:2em;font-size:15px;margin:12px 0;}
+        .list-text{margin:8px 0;padding-left:15px;font-size:15px;}
+        .split-line{margin:25px 0;border:1px dashed var(--san-yellow);}
+
+        /* 答题板块样式 */
+        .ques-item{
+            margin:20px 0;
+            padding:15px;
+            border:1px solid var(--san-yellow);
+            border-radius:8px;
+        }
+        .option{margin:8px 0;cursor:pointer;}
+        .btn-area{text-align:center;margin:28px 0;}
+        .submit-btn,.reset-btn{
+            padding:9px 25px;
+            border:none;border-radius:5px;
+            font-size:15px;cursor:pointer;margin:0 8px;
+        }
+        .submit-btn{background:var(--san-green);color:#fff;}
+        .reset-btn{background:var(--san-brown);color:#fff;}
+        .result-show{text-align:center;font-size:17px;font-weight:bold;margin-top:15px;}
+        .right-text{color:#2e7d32;}
+        .error-text{color:#c62828;}
+    </style>
+</head>
+<body>
+    <!-- 顶部标题栏 -->
+    <div class="header-box">
+        <h1>中华民族共同体数字化学习平台</h1>
+        <p>铸牢共同体意识 传承中华文脉</p>
+    </div>
+
+    <!-- 首页功能模块 -->
+    <div class="nav-module" id="homePage">
+        <div class="nav-card" onclick="switchPage('bookContent')">
+            <h3>十六讲全书精华</h3>
+            <span>概论核心考点系统学习</span>
+        </div>
+        <div class="nav-card" onclick="switchPage('cultureLearn')">
+            <h3>民族多元文化</h3>
+            <span>民俗非遗艺术文化汇总</span>
+        </div>
+        <div class="nav-card" onclick="switchPage('historyThought')">
+            <h3>正确历史观念</h3>
+            <span>民族交融发展历史脉络</span>
+        </div>
+        <div class="nav-card" onclick="switchPage('eraValue')">
+            <h3>时代价值使命</h3>
+            <span>当代责任与发展意义</span>
+        </div>
+        <div class="nav-card" onclick="switchPage('knowledgeTest')">
+            <h3>知识自测答题</h3>
+            <span>10道考题自动判分纠错</span>
+        </div>
+    </div>
+
+    <!-- 模块1：十六讲全书精华内容 -->
+    <div class="content-wrap" id="bookContent">
+        <span class="back-btn" onclick="backIndex()">返回首页</span>
+        <h2>《中华民族共同体概论》十六讲核心精华</h2>
+
+        <div class="title-four">第一讲 中华民族共同体基础理论（重点核心）</div>
+        <div class="title-four">第一节 基本概念</div>
+        <p class="text-content">中华民族是我国境内所有民族的总称，是数千年族群交融形成的命运整体。中华民族共同体，是各民族依托共同疆域、历史文化、奋斗历程凝聚而成的团结整体。中华民族共同体意识，是各族群众认同共同身份、家国归属，坚守团结统一的思想认知，是维系民族向心力的精神根基。</p>
+
+        <div class="title-four">第二节 基本理念体系</div>
+        <p class="text-content"><strong>十二个必须</strong>：立足民族复兴把握工作方位；携手共建现代化国家；以铸牢共同体意识为主线；坚守正确中华民族历史观；坚持各民族一律平等；维护中华民族大团结；完善民族区域自治制度；构筑共有精神家园；促进各族交往交流交融；提升民族事务治理现代化；防范民族领域风险隐患；坚持党的全面领导。</p>
+        <p class="text-content"><strong>五个共同</strong>：各族拥有共同历史记忆，共同书写中华文明；共同守护辽阔国土疆域；共同传承一脉相承的中华文化；共同并肩抵御危难、艰苦奋斗；共同奔赴民族复兴未来命运。</p>
+        <p class="text-content"><strong>五个相</strong>：各族彼此相知了解、相互尊重；日常相处相亲相近、消除隔阂；经济文化生活深度相融；危难时刻守望相助；同心相守国家统一与民族团结。</p>
+        <p class="list-text">四个与共：休戚与共、荣辱与共、生死与共、命运与共。</p>
+        <p class="list-text">四对关系：统筹共同性与差异性、整体与局部、历史与现实、国内与对外发展关系。</p>
+
+        <div class="title-four">第三节 理论渊源</div>
+        <p class="text-content">理论根植于马克思主义民族理论与国家学说，具备科学理论支撑；承袭华夏千年大一统历史传统，积淀家国一体固有认知；依托马克思主义基本原理同中国实际、中华优秀传统文化两个结合，形成本土化、符合国情的共同体理论体系。</p>
+
+        <div class="title-four">第四节 全面推进共同体建设</div>
+        <p class="text-content">以铸牢中华民族共同体意识为主线，从思想文化、区域经济、社会治理、全民教育、法治保障多维度协同发力，缩小民族地区发展差距，加深族群交融联结，共建共有精神家园，推动全体民族共同迈向社会主义现代化。</p>
+
+        <hr class="split-line">
+        <div class="title-four">第二讲 树立正确的中华民族历史观</div>
+        <p class="text-content">本讲要求以整体大历史视角看待民族发展，摒弃狭隘民族史观与历史虚无主义。大一统是历史发展主流，分裂仅为短暂阶段。所有民族都是中华文明创造者，彼此相互依存密不可分。学习中要正视各族历史贡献，树立多元一体整体认知，认清共同体形成的历史必然。</p>
+
+        <div class="title-four">第三讲 文明初现与中华民族起源（史前时期）</div>
+        <p class="text-content">中华文明呈现多区域同步起源特征，仰韶、龙山、红山等文化共同构筑早期文明根基。史前文化相互传播交融，逐步形成早期文化共同体。原始部落打破地域界限融合共生，证明中华民族自诞生之初就是多族群融合整体，不存在单一民族独立起源。</p>
+
+        <div class="title-four">第四讲 天下秩序与华夏共同体演进（夏商周时期）</div>
+        <p class="text-content">分封制与宗法制构建天下一家政治理念，华夷区分以文化认同为标准，具备极强包容性。周边部族通过朝贡、联姻逐步融入华夏体系，王朝更迭不断扩大华夏族群范围，开放包容的文化特质，为后世大一统格局打下思想基础。</p>
+
+        <div class="title-four">第五讲 大一统与中华民族初步形成（秦汉时期）</div>
+        <p class="text-content">秦朝统一后统一文字、道路、伦理规范，打破地域壁垒，凝聚统一文化制度认同。汉代开拓边疆，连通中原与西域，丝绸之路推动农牧文明互补交融。秦汉确立大一统国家形态，正式形成疆域辽阔、文化统一的多民族国家。</p>
+
+        <div class="title-four">第六讲 “五胡”入华与中华民族大交融（魏晋南北朝时期）</div>
+        <p class="text-content">北方少数民族大规模内迁混居，开启大规模民族融合。北魏汉化改革推动族群深度同化，各族语言、饮食、风俗互相借鉴吸收。即便政权分裂对峙，民族交融趋势从未中断，融合成果为隋唐盛世统一筑牢根基。</p>
+
+        <div class="title-four">第七讲 华夷一体与中华民族空前繁盛（隋唐五代时期）</div>
+        <p class="text-content">唐朝秉持平等包容民族理念，广受周边民族拥戴。都城成为多民族文化交流中心，异域文化与中原文化相互融合吸收。灵活的边疆治理模式稳固疆域统治，中华文化影响力大幅提升，迎来民族共同体发展鼎盛阶段。</p>
+
+        <div class="title-four">第八讲 共奉中国与中华民族内聚发展（辽宋夏金时期）</div>
+        <p class="text-content">多政权并立阶段，各方均认同华夏正统身份。边境商贸往来频繁，农牧文化互相学习借鉴。各政权推崇儒家文化传承文脉，政权分立并未割裂文化与国家认同，民族向心力持续凝聚巩固。</p>
+
+        <div class="title-four">第九讲 混一南北与中华民族大统合（元朝时期）</div>
+        <p class="text-content">元朝实现全国大一统，疆域版图空前广阔，奠定现代国土基础。行省制度强化中央对边疆管控，驿站体系便利各族人员往来交流。多民族共处催生新族群诞生，共同体实现大范围、深层次整合统一。</p>
+
+        <div class="title-four">第十讲 中外会通与中华民族接续巩固（明朝时期）</div>
+        <p class="text-content">明代完善边疆管辖制度，稳固国土边界。远洋交流带动国内区域商贸互通，商品经济繁荣促进民间通婚与族群往来。传统思想文化广泛传播，不断强化全民统一的民族与文化认同。</p>
+
+        <div class="title-four">第十一讲 中华一家与中华民族格局底定（清前中期）</div>
+        <p class="text-content">清朝陆续统一边疆领土，划定现代中国疆域范围。依据地域民族特点实行差异化治理政策，满汉文化深度融合交融。系统整理汇编各族文化典籍，统一多民族国家形态完全成熟，中华民族基本格局正式定型。</p>
+
+        <div class="title-four">第十二讲 民族危亡与中华民族意识觉醒(1840-1919)</div>
+        <p class="text-content">近代外敌入侵让国家陷入存亡危机，传统族群观念转变为现代民族国家认知。中华民族概念正式提出，凝聚全体国民共识。各族儿女携手投身反帝救国斗争，共同危难催生高度统一的民族共同体意识。</p>
+
+        <div class="title-four">第十三讲 先锋队与中华民族独立解放(1919-1949)</div>
+        <p class="text-content">中国共产党始终坚持民族平等原则，团结全国各族群众。长征途中团结少数民族凝聚民心，抗日战争建立统一战线共御外敌。各族人民并肩作战推翻压迫统治，共同迎来民族独立与人民解放。</p>
+
+        <div class="title-four">第十四讲 新中国与中华民族新发展(1949-2012)</div>
+        <p class="text-content">新中国确立民族平等、团结、区域自治、共同繁荣基本原则。设立民族自治地方保障少数民族当家权利，出台扶持政策助力民族地区经济腾飞。培育少数民族干部队伍，各族携手稳步走向共同发展。</p>
+
+        <div class="title-four">第十五讲 新时代与中华民族共同体建设(2012—至今)</div>
+        <p class="text-content">新时代将铸牢中华民族共同体意识定为民族工作主线，践行四个与共共同体理念。全力构筑共有精神家园，持续促进各族交往交融，缩小区域发展差距，带领全体民族共同富裕，全方位推进民族事业高质量发展。</p>
+
+        <div class="title-four">第十六讲 文明新路与人类命运共同体</div>
+        <p class="text-content">中华民族共同体理念传承天下大同传统智慧，是人类命运共同体的中国实践。包容多元的中华文明，为全球民族治理提供中国方案。依托中华文脉加强世界文明互鉴，以民族共同体发展助力人类共同进步。</p>
+    </div>
+
+    <!-- 模块2：民族多元文化 -->
+    <div class="content-wrap" id="cultureLearn">
+        <span class="back-btn" onclick="backIndex()">返回首页</span>
+        <h2>中华民族多元一体特色文化</h2>
+        <p class="text-content">我国五十六个民族文化各具特色，又相融共生汇聚成璀璨中华文明，和而不同的文化特质与唐三彩兼容配色理念高度契合。各族民俗节庆底蕴深厚，那达慕、泼水节、火把节、雪顿节等节庆，承载着族群信仰与生活习俗。</p>
+        <p class="text-content">传统建筑、服饰艺术风格迥异，草原毡房、高原碉楼、岭南吊脚楼展现多样地域风貌。非遗技艺种类丰富，歌舞、银饰、戏曲、传统手工共同构筑民族文化宝库。饮食、语言、习俗长期相互借鉴融合，各民族文化不分彼此，共同构筑全体中华儿女共有的精神家园。</p>
+    </div>
+
+    <!-- 模块3：正确历史观念 -->
+    <div class="content-wrap" id="historyThought">
+        <span class="back-btn" onclick="backIndex()">返回首页</span>
+        <h2>树立正确中华民族历史观</h2>
+        <p class="text-content">看待民族历史必须坚持整体全局思维，拒绝割裂历史、放大族群分歧。数千年发展历程中，团结统一、交往交融始终是历史主流，政权分立只是短暂现象。从古至今，所有民族都归属中华大家庭，共同开拓国土、创造文明。</p>
+        <p class="text-content">近代危难时刻，各族人民同心守护家国，凝聚坚不可摧的民族合力。学习历史要摒弃片面狭隘观念，尊重每一个民族的历史贡献，认清多元一体发展本质，守护共同历史记忆，维护民族团结与国家统一。</p>
+    </div>
+
+    <!-- 模块4：时代价值使命 -->
+    <div class="content-wrap" id="eraValue">
+        <span class="back-btn" onclick="backIndex()">返回首页</span>
+        <h2>铸牢中华民族共同体意识时代价值</h2>
+        <p class="text-content">共同体意识是国家稳定统一的重要保障，能够抵御分裂思想，守护领土完整与边疆安定。经济层面推动区域协同发展，帮扶民族地区提质增效，逐步实现各族共同富裕。</p>
+        <p class="text-content">精神层面凝聚全民向心力，传承中华优秀文脉，提升民族归属感与自豪感。团结的民族力量能够助力国家科技、国防、文化全面发展，新时代青年应当坚守团结理念，扛起民族复兴责任，携手共建美好未来。</p>
+    </div>
+
+    <!-- 模块5：知识自测答题 -->
+    <div class="content-wrap" id="knowledgeTest">
+        <span class="back-btn" onclick="backIndex()">返回首页</span>
+        <h2>中华民族共同体知识自测答题（共10题）</h2>
+
+        <div class="ques-item">
+            <p>1.新时代党的民族工作核心主线是？</p>
+            <div class="option"><input type="radio" name="q1" value="A">A.铸牢中华民族共同体意识</div>
+            <div class="option"><input type="radio" name="q1" value="B">B.单独发展单一民族文化</div>
+            <div class="option"><input type="radio" name="q1" value="C">C.划分民族独立发展区域</div>
+        </div>
+        <div class="ques-item">
+            <p>2.下列不属于四个与共内容的是？</p>
+            <div class="option"><input type="radio" name="q2" value="A">A.生死与共</div>
+            <div class="option"><input type="radio" name="q2" value="B">B.利益独享</div>
+            <div class="option"><input type="radio" name="q2" value="C">C.荣辱与共</div>
+        </div>
+        <div class="ques-item">
+            <p>3.中华民族初步形成于哪个历史时期？</p>
+            <div class="option"><input type="radio" name="q3" value="A">A.秦汉时期</div>
+            <div class="option"><input type="radio" name="q3" value="B">B.宋朝时期</div>
+            <div class="option"><input type="radio" name="q3" value="C">C.清朝时期</div>
+        </div>
+        <div class="ques-item">
+            <p>4.魏晋南北朝最核心民族发展特征是？</p>
+            <div class="option"><input type="radio" name="q4" value="A">A.民族大交融</div>
+            <div class="option"><input type="radio" name="q4" value="B">B.族群相互隔绝</div>
+            <div class="option"><input type="radio" name="q4" value="C">C.单一民族封闭发展</div>
+        </div>
+        <div class="ques-item">
+            <p>5.我国处理民族关系基本政治制度是？</p>
+            <div class="option"><input type="radio" name="q5" value="A">A.民族区域自治制度</div>
+            <div class="option"><input type="radio" name="q5" value="B">B.联邦自治制度</div>
+            <div class="option"><input type="radio" name="q5" value="C">C.宗族管理制度</div>
+        </div>
+        <div class="ques-item">
+            <p>6.中华文明起源整体形态为？</p>
+            <div class="option"><input type="radio" name="q6" value="A">A.多元一体多区域起源</div>
+            <div class="option"><input type="radio" name="q6" value="B">B.单一族群独立起源</div>
+            <div class="option"><input type="radio" name="q6" value="C">C.外来迁徙形成文明</div>
+        </div>
+        <div class="ques-item">
+            <p>7.清前中期最主要历史贡献是？</p>
+            <div class="option"><input type="radio" name="q7" value="A">A.奠定现代中国疆域格局</div>
+            <div class="option"><input type="radio" name="q7" value="B">B.拆分国土族群势力</div>
+            <div class="option"><input type="radio" name="q7" value="C">C.断绝民族日常往来</div>
+        </div>
+        <div class="ques-item">
+            <p>8.中华民族整体意识大规模觉醒于？</p>
+            <div class="option"><input type="radio" name="q8" value="A">A.近代民族危亡阶段</div>
+            <div class="option"><input type="radio" name="q8" value="B">B.远古史前文明时期</div>
+            <div class="option"><input type="radio" name="q8" value="C">C.古代和平盛世阶段</div>
+        </div>
+        <div class="ques-item">
+            <p>9.不属于五个共同核心内涵的是？</p>
+            <div class="option"><input type="radio" name="q9" value="A">A.各自专属国土领地</div>
+            <div class="option"><input type="radio" name="q9" value="B">B.共同历史发展记忆</div>
+            <div class="option"><input type="radio" name="q9" value="C">C.共同未来发展命运</div>
+        </div>
+        <div class="ques-item">
+            <p>10.对待民族文化差异正确态度是？</p>
+            <div class="option"><input type="radio" name="q10" value="A">A.尊重包容、和而不同</div>
+            <div class="option"><input type="radio" name="q10" value="B">B.排斥否定民族差异</div>
+            <div class="option"><input type="radio" name="q10" value="C">C.刻意割裂民族关系</div>
+        </div>
+
+        <div class="btn-area">
+            <button class="submit-btn" onclick="checkAnswer()">提交答案判分</button>
+            <button class="reset-btn" onclick="clearAnswer()">重置所有选项</button>
+        </div>
+        <div class="result-show" id="resultBox"></div>
+    </div>
+
+    <script>
+        // 隐藏全部内容页
+        function hideAllContent(){
+            document.querySelectorAll(".content-wrap").forEach(item=>{
+                item.style.display="none";
+            });
+            document.getElementById("homePage").style.display="grid";
+        }
+        // 切换页面
+        function switchPage(id){
+            hideAllContent();
+            document.getElementById(id).style.display="block";
+            document.getElementById("homePage").style.display="none";
+        }
+        // 返回首页
+        function backIndex(){
+            hideAllContent();
+        }
+
+        // 标准答案
+        const rightAns = ["A","B","A","A","A","A","A","A","A","A"];
+        // 判分纠错
+        function checkAnswer(){
+            let score = 0;
+            let finish = true;
+            let tipText = "";
+            for(let i=1;i<=10;i++){
+                let choose = document.querySelector(`input[name="q${i}"]:checked`);
+                if(!choose){
+                    finish = false;
+                    break;
+                }
+            }
+            if(!finish){
+                document.getElementById("resultBox").innerHTML="<span class='error-text'>请完成全部题目选择后再提交！</span>";
+                return;
+            }
+            for(let i=1;i<=10;i++){
+                let userSel = document.querySelector(`input[name="q${i}"]:checked`).value;
+                if(userSel === rightAns[i-1]){
+                    score++;
+                }else{
+                    tipText += `第${i}题作答错误，正确答案：${rightAns[i-1]}；`;
+                }
+            }
+            if(score === 10){
+                document.getElementById("resultBox").innerHTML=`<span class='right-text'>满分作答！得分10分，全部题目回答正确</span>`;
+            }else{
+                document.getElementById("resultBox").innerHTML=
+                `<span class='error-text'>本次得分：${score}分，答对${score}题，答错${10-score}题<br>${tipText}</span>`;
+            }
+        }
+        // 清空选项
+        function clearAnswer(){
+            document.querySelectorAll("input[type='radio']").forEach(radio=>{
+                radio.checked=false;
+            });
+            document.getElementById("resultBox").innerText="";
+        }
+    </script>
+</body>
+</html>
